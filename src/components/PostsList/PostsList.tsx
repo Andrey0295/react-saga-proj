@@ -1,11 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { deletePostsRequest } from "../../redux/actions/posts.actions";
-import { IPost, IPostsListProps } from "./PostsListTypes";
+import postsActions from "../../redux/actions/posts.actions";
+import { IPost } from "./PostsListTypes";
 
-export const PostsList: React.FC<{ postsData: IPostsListProps }> = ({
-  postsData,
-}): JSX.Element => {
+export const PostsList: React.FC<{ postsData: IPost[] }> = ({ postsData }) => {
   const dispatch = useDispatch();
 
   return (
@@ -20,7 +18,9 @@ export const PostsList: React.FC<{ postsData: IPostsListProps }> = ({
             <h2>{post.title}</h2>
             <p>{post.body}</p>
             <button
-              onClick={() => dispatch(deletePostsRequest(post.id))}
+              onClick={() => {
+                dispatch(postsActions.deletePostsRequest(post.id));
+              }}
               type="button"
             >
               Delete

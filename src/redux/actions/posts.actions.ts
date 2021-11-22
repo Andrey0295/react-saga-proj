@@ -1,45 +1,40 @@
-import { postsConstants } from '../constants/posts.constants';
-import { PostsActionsTypes } from '../types/posts.types';
-
-// GET ALL POSTS ACTIONS //////
-  export function getPostsRequest(): PostsActionsTypes {
-    return { type: postsConstants.GET_POSTS_REQUEST };
-  }
-  export function getPostsSuccess(data: Array<object>):PostsActionsTypes {
-    return { type: postsConstants.GET_POSTS_SUCCESS, payload:data };
-  }
-  export function getPostsFailure(error: string): PostsActionsTypes {
-    return { type: postsConstants.GET_POSTS_FAILURE, payload: error };
-  }  
+import { createAction } from '@reduxjs/toolkit';
 
 
 
+const getPostsRequest = createAction('posts/getPostsRequest');
+const getPostsSuccess = createAction('posts/getPostsSuccess',(data: [...data:any])=> ({
+  payload: data,
+  
+}));
 
-// DELETE POSTS ACTIONS //////
+const getPostsError = createAction('posts/getPostsError', (error: string)=>({
+  payload: error
+}));
+
+const deletePostsRequest = createAction('posts/deletePostsRequest', (id: number | string)=>({
+  payload: id,
+}));
+
+const deletePostsSuccess = createAction('posts/deletePostsSuccess', (id: number | string)=>({
+  payload: id,
+}));
+
+const deletePostsError = createAction('posts/deletePostsError', (error: string)=>({
+  payload: error
+}));
 
 
-export function deletePostsRequest(id: number | string): PostsActionsTypes {
-  return { type: postsConstants.DELETE_POSTS_REQUEST, payload: id };
-}
-export function deletePostsSuccess(id: number | string):PostsActionsTypes {
-  return { type: postsConstants.DELETE_POSTS_SUCCESS, payload: id };
-}
-export function deletePostsFailure(error: string): PostsActionsTypes {
-  return { type: postsConstants.DELETE_POSTS_FAILURE, payload: error };
-}  
+
+export default {
+  getPostsRequest,
+  getPostsSuccess,
+  getPostsError,
+  deletePostsRequest,
+  deletePostsSuccess,
+  deletePostsError,
+
+};
 
 
 
-
-
-
-
-  // export default {
-  //   getPostsRequest,
-  //   getPostsSuccess,
-  //   getPostsFailure,
-  //   deletePostsRequest,
-  //   deletePostsSuccess,
-  //   deletePostsFailure
-
-  // }

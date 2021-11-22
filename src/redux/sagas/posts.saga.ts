@@ -1,32 +1,38 @@
-import { put, takeEvery } from 'redux-saga/effects';
-import { deletePostsFailure, deletePostsSuccess, getPostsFailure, getPostsSuccess } from "../actions/posts.actions";
+import { put, takeEvery, call } from 'redux-saga/effects';
+import postsActions from '../actions/posts.actions';
 import { postsService } from '../services/posts.services';
+
+interface IDeleteAction {
+    type: string,
+    payload: number | string
+}
 
 
 function*  getPostsSaga(): any {
     try {
         const result = yield postsService.getPostsService()
         const data = yield result.json()
-        yield put(getPostsSuccess(data))
+        yield put(postsActions.getPostsSuccess(data))
         
     } catch(err: any) {
-        yield put(getPostsFailure(err.message));
+        yield put(postsActions.getPostsError(err.message));
     }
 }
 
-function* deletePostsSaga({payload}: any): any {
-    try {
-        yield postsService.deletePostsService(payload)
-        yield put(deletePostsSuccess(payload))
-    }
-    catch(err: any) {
-        yield put(deletePostsFailure(err.message))
-    }
+
+function* deletePostsSaga(action: IDeleteAction):any {
+        const response = yield call(postsService.deletePostsService, action.payload)
+        switch (response.status) {
+			case 200:
+			yield put(postsActions.deletePostsSuccess(action.payload));
+            break;
+            default: yield put(postsActions.deletePostsError("Somthing went wrong"));    
+        }
 }
 
 function* watchPostsSaga(){
-    yield takeEvery("GET_POSTS_REQUEST", getPostsSaga );
-    yield takeEvery("DELETE_POSTS_REQUEST", deletePostsSaga);
+    yield takeEvery(postsActions.getPostsRequest, getPostsSaga );
+    yield takeEvery(postsActions.deletePostsRequest, deletePostsSaga);
 }
 
 

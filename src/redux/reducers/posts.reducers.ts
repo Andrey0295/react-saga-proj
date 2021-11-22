@@ -1,55 +1,32 @@
-import { postsConstants } from "../constants/posts.constants";
-import { IPostsState, PostsActionsTypes } from "../types/posts.types";
+import { combineReducers } from 'redux';
+import { createReducer } from '@reduxjs/toolkit';
+import actions from '../actions/posts.actions';
 
-const initialState : IPostsState= {
-    isEditLoading: false,
-    postsList: { isLoading: false, data: []}
-  };
+const {
+  getPostsRequest,
+  getPostsSuccess,
+  getPostsError,
+  deletePostsRequest,
+  deletePostsSuccess,
+  deletePostsError
+} = actions
 
+  const data = createReducer([], {
+    [getPostsSuccess.type]: (_, {payload}) => payload.map((post:any)=> ({...post, isLoading: false})), 
+    [deletePostsSuccess.type]: (state, {payload}) => state.filter((post:any) => post.id !== payload) 
+  })
 
-  export function posts(state:IPostsState = initialState, action:PostsActionsTypes) {
-    
-    switch (action.type) {
-      case postsConstants.GET_POSTS_REQUEST:
-        return {
-          ...state,
-          postsList: {...state.postsList, isLoading: true}
-        };
-      case postsConstants.GET_POSTS_SUCCESS:
-        return {
-          ...state,
-          postsList: {isLoading: false, data: action.payload.map((cart: any) => {
-            return {...cart, isLoading: false}
-          })},
-        };
-      case postsConstants.GET_POSTS_FAILURE:
-        return {
-          ...state,
-          postsList: {...state.postsList, isLoading: false}
-        };
-        case postsConstants.DELETE_POSTS_REQUEST:
-          return {
-            ...state,
-            postsList: {...state.postsList},
-            isEditLoading: true
-          };
-        case postsConstants.DELETE_POSTS_SUCCESS:
-          return {
-            ...state,
-            postsList: {...state.postsList, data: [...state.postsList.data.filter(post => post.id !== action.payload)]},
-            isEditLoading: false
-          };
-        case postsConstants.DELETE_POSTS_FAILURE:
-          return {
-            ...state,
-            postsList: {...state.postsList},
-            isEditLoading: false
-          };
+  const isLoading = createReducer(false, {
+    [getPostsRequest.type]: () => true,
+    [getPostsSuccess.type]: () => false,
+    [getPostsError.type]: () => false,
+    [deletePostsRequest.type]: () => true,
+    [deletePostsSuccess.type]: () => false,
+    [deletePostsError.type]: () => false,
+  })
 
 
-        default:
-      return state 
-
-    }
-    
-}
+export default combineReducers({
+  data,
+  isLoading,
+});

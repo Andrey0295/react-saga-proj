@@ -6,6 +6,5 @@ export interface IPost {
 
 export interface IPostsListProps {
   postsData: [...any];
-  map(args: (post: IPost) => JSX.Element): React.ReactNode;
 }
 
