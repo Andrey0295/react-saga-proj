@@ -1,14 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import postsActions from "../../redux/actions/posts.actions";
+import { getPostsRequest } from "../../redux/actions/posts.actions";
 import { PostsList } from "../PostsList/PostsList";
 
-export const PostsMain = () => {
+export const PostsMain: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
   const postsState = useSelector((state: any) => state.posts);
 
   const handleButtonClick = (): void => {
-    dispatch(postsActions.getPostsRequest());
+    dispatch(getPostsRequest());
   };
 
   return (

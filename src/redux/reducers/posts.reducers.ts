@@ -1,6 +1,5 @@
 import { postsConstants } from "../constants/posts.constants";
-import { IPostsState } from "../types/posts.types";
-import { IPostsAction } from "../types/posts.types";
+import { IPostsState, PostsActionsTypes } from "../types/posts.types";
 
 const initialState : IPostsState= {
     isEditLoading: false,
@@ -8,7 +7,7 @@ const initialState : IPostsState= {
   };
 
 
-  export function posts(state = initialState, action: any): IPostsState {
+  export function posts(state:IPostsState = initialState, action:PostsActionsTypes) {
     
     switch (action.type) {
       case postsConstants.GET_POSTS_REQUEST:
@@ -19,7 +18,7 @@ const initialState : IPostsState= {
       case postsConstants.GET_POSTS_SUCCESS:
         return {
           ...state,
-          postsList: {isLoading: false, data: action.data.map((cart: any) => {
+          postsList: {isLoading: false, data: action.payload.map((cart: any) => {
             return {...cart, isLoading: false}
           })},
         };
@@ -37,7 +36,7 @@ const initialState : IPostsState= {
         case postsConstants.DELETE_POSTS_SUCCESS:
           return {
             ...state,
-            postsList: {...state.postsList, data: [...state.postsList.data.filter(post => post.id !== action.id)]},
+            postsList: {...state.postsList, data: [...state.postsList.data.filter(post => post.id !== action.payload)]},
             isEditLoading: false
           };
         case postsConstants.DELETE_POSTS_FAILURE:

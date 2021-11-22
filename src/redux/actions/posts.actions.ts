@@ -1,14 +1,15 @@
-import {postsConstants} from '../constants/posts.constants';
+import { postsConstants } from '../constants/posts.constants';
+import { PostsActionsTypes } from '../types/posts.types';
 
 // GET ALL POSTS ACTIONS //////
-  function getPostsRequest() {
+  export function getPostsRequest(): PostsActionsTypes {
     return { type: postsConstants.GET_POSTS_REQUEST };
   }
-  function getPostsSuccess(data: any) {
-    return { type: postsConstants.GET_POSTS_SUCCESS, data };
+  export function getPostsSuccess(data: Array<object>):PostsActionsTypes {
+    return { type: postsConstants.GET_POSTS_SUCCESS, payload:data };
   }
-  function getPostsFailure(error: string) {
-    return { type: postsConstants.GET_POSTS_FAILURE, error };
+  export function getPostsFailure(error: string): PostsActionsTypes {
+    return { type: postsConstants.GET_POSTS_FAILURE, payload: error };
   }  
 
 
@@ -17,14 +18,14 @@ import {postsConstants} from '../constants/posts.constants';
 // DELETE POSTS ACTIONS //////
 
 
-function deletePostsRequest(id: any) {
-  return { type: postsConstants.DELETE_POSTS_REQUEST, id };
+export function deletePostsRequest(id: number | string): PostsActionsTypes {
+  return { type: postsConstants.DELETE_POSTS_REQUEST, payload: id };
 }
-function deletePostsSuccess(id: number | string) {
-  return { type: postsConstants.DELETE_POSTS_SUCCESS, id };
+export function deletePostsSuccess(id: number | string):PostsActionsTypes {
+  return { type: postsConstants.DELETE_POSTS_SUCCESS, payload: id };
 }
-function deletePostsFailure(error: string) {
-  return { type: postsConstants.DELETE_POSTS_FAILURE, error };
+export function deletePostsFailure(error: string): PostsActionsTypes {
+  return { type: postsConstants.DELETE_POSTS_FAILURE, payload: error };
 }  
 
 
@@ -33,12 +34,12 @@ function deletePostsFailure(error: string) {
 
 
 
-  export default {
-    getPostsRequest,
-    getPostsSuccess,
-    getPostsFailure,
-    deletePostsRequest,
-    deletePostsSuccess,
-    deletePostsFailure
+  // export default {
+  //   getPostsRequest,
+  //   getPostsSuccess,
+  //   getPostsFailure,
+  //   deletePostsRequest,
+  //   deletePostsSuccess,
+  //   deletePostsFailure
 
-  }
+  // }
