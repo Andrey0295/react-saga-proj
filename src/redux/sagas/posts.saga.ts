@@ -7,7 +7,6 @@ interface IDeleteAction {
     payload: number | string
 }
 
-
 function*  getPostsSaga(): any {
     try {
         const result = yield postsService.getPostsService()
@@ -18,7 +17,6 @@ function*  getPostsSaga(): any {
         yield put(postsActions.getPostsError(err.message));
     }
 }
-
 
 function* deletePostsSaga(action: IDeleteAction):any {
         const response = yield call(postsService.deletePostsService, action.payload)
@@ -34,6 +32,5 @@ function* watchPostsSaga(){
     yield takeEvery(postsActions.getPostsRequest, getPostsSaga );
     yield takeEvery(postsActions.deletePostsRequest, deletePostsSaga);
 }
-
 
 export default watchPostsSaga;
