@@ -14,6 +14,7 @@ export const PostsMain: React.FC = (): JSX.Element => {
   return (
     <div>
       <button onClick={handleButtonClick}>Get Posts</button>
+      <h1>Hello example</h1>
 
       {postsState.isLoading ? (
         <h2>Loading...Loading...Loading...</h2>
