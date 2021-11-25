@@ -84,6 +84,7 @@ export const PostsList: React.FC<{ postsData: IPost[] }> = ({ postsData }) => {
           <TitleBlock>
             <Title>Hello world</Title>
             <Title>Hello example</Title>
+            <Title>Hello example 2</Title>
           </TitleBlock>
           <div>
             <button
